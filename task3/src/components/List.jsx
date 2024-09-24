@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -22,6 +23,7 @@ import Zoom from "@mui/material/Zoom";
 import FeedRoundedIcon from "@mui/icons-material/FeedRounded";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from "next/navigation";
 
 const dancingScript = Dancing_Script({
   weight: "500",
@@ -33,6 +35,10 @@ export default function InteractiveList({ questions }) {
   if (!questions || questions.length === 0) {
     return <p>No questions found.</p>;
   }
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/addquestion");
+  };
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
       <Grid container spacing={2}>
@@ -53,8 +59,17 @@ export default function InteractiveList({ questions }) {
                 <Button variant="outlined" endIcon={<FeedRoundedIcon />}>
                   Generate Form
                 </Button>
-                <Tooltip followCursor TransitionComponent={Zoom} title="Add more questions">
-                  <Fab size="medium" color="secondary" aria-label="add">
+                <Tooltip
+                  followCursor
+                  TransitionComponent={Zoom}
+                  title="Add more questions"
+                >
+                  <Fab
+                    onClick={handleClick}
+                    size="medium"
+                    color="secondary"
+                    aria-label="add"
+                  >
                     <AddIcon />
                   </Fab>
                 </Tooltip>
