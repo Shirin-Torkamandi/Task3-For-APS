@@ -16,6 +16,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useRouter } from "next/navigation";
 
 export default function QuestionMaker() {
   const [selectedTab, setSelectedTab] = React.useState("short-answer");
@@ -67,6 +68,11 @@ export default function QuestionMaker() {
       ...prevChecked,
       [name]: checked,
     }));
+  };
+
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/");
   };
 
   return (
@@ -415,6 +421,7 @@ export default function QuestionMaker() {
               sx={{ backgroundColor: grey[500] }}
               variant="contained"
               startIcon={<DeleteIcon />}
+              onClick={handleClick}
             >
               Cancel
             </Button>
