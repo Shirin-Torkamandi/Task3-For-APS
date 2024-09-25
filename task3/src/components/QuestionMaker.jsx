@@ -15,7 +15,7 @@ import { grey } from "@mui/material/colors";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 
 export default function QuestionMaker() {
   const [selectedTab, setSelectedTab] = React.useState("short-answer");
@@ -40,6 +40,33 @@ export default function QuestionMaker() {
       ...radioValue,
       [name]: value,
     });
+  };
+
+  const [checkedValue, setCheckedValue] = React.useState({
+    option1: "checked1",
+    option2: "checked2",
+    option3: "checked3",
+    option4: "checked4",
+  });
+  const [checked, setChecked] = React.useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCheckedValue({
+      ...checkedValue,
+      [name]: value,
+    });
+  };
+  const handleCheckedChange = (event) => {
+    const { name, checked } = event.target;
+    setChecked((prevChecked) => ({
+      ...prevChecked,
+      [name]: checked,
+    }));
   };
 
   return (
@@ -193,7 +220,7 @@ export default function QuestionMaker() {
                       value="option3"
                       control={<Radio />}
                       label=""
-                      sx={{ marginRight: 0, marginLeft: 0.5}}
+                      sx={{ marginRight: 0, marginLeft: 0.5 }}
                     />
                     <TextField
                       name="option3"
@@ -213,7 +240,6 @@ export default function QuestionMaker() {
                         "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
                       borderRadius: "20px",
                       paddingRight: "10px",
-                      
                     }}
                   >
                     <FormControlLabel
@@ -234,7 +260,145 @@ export default function QuestionMaker() {
                 </RadioGroup>
               </FormControl>
             )}
-            {selectedTab === "checkboxes" && <p>Checkboxes Content</p>}
+            {selectedTab === "checkboxes" && (
+              <FormControl
+                sx={{
+                  paddingLeft: "30px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    background:
+                      "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                    borderRadius: "20px",
+                    paddingRight: "10px",
+                    marginBottom: "5px",
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checked.option1}
+                        onChange={handleCheckedChange}
+                        name="option1"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    }
+                    label=""
+                    sx={{ marginRight: 0.5 }}
+                  />
+                  <TextField
+                    name="option1"
+                    variant="outlined"
+                    size="small"
+                    value={checkedValue.option1}
+                    onChange={handleInputChange}
+                    sx={{ width: "100%" }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    background:
+                      "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                    borderRadius: "20px",
+                    paddingRight: "10px",
+                    marginBottom: "5px",
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checked.option2}
+                        onChange={handleCheckedChange}
+                        name="option2"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    }
+                    label=""
+                    sx={{ marginRight: 0.5 }}
+                  />
+                  <TextField
+                    name="option2"
+                    variant="outlined"
+                    size="small"
+                    value={checkedValue.option2}
+                    onChange={handleInputChange}
+                    sx={{ width: "100%" }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    background:
+                      "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                    borderRadius: "20px",
+                    paddingRight: "10px",
+                    marginBottom: "5px",
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checked.option3}
+                        onChange={handleCheckedChange}
+                        name="option3"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    }
+                    label=""
+                    sx={{ marginRight: 0.5 }}
+                  />
+                  <TextField
+                    name="option3"
+                    variant="outlined"
+                    size="small"
+                    value={checkedValue.option3}
+                    onChange={handleInputChange}
+                    sx={{ width: "100%" }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    background:
+                      "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                    borderRadius: "20px",
+                    paddingRight: "10px",
+                    marginBottom: "5px",
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checked.option4}
+                        onChange={handleCheckedChange}
+                        name="option4"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    }
+                    label=""
+                    sx={{ marginRight: 0.5 }}
+                  />
+                  <TextField
+                    name="option4"
+                    variant="outlined"
+                    size="small"
+                    value={checkedValue.option4}
+                    onChange={handleInputChange}
+                    sx={{ width: "100%" }}
+                  />
+                </Box>
+              </FormControl>
+            )}
           </Box>
         </Grid>
 
