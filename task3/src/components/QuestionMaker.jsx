@@ -11,61 +11,252 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid2";
+import { grey } from "@mui/material/colors";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from '@mui/material/Checkbox';
 
 export default function QuestionMaker() {
   const [selectedTab, setSelectedTab] = React.useState("short-answer");
-
   const handleChange = (event) => {
     setSelectedTab(event.target.value);
   };
 
+  const [value, setValue] = React.useState("");
+  const handleChangeValue = (event) => {
+    setValue(event.target.value);
+  };
+
+  const [radioValue, setRadioValue] = React.useState({
+    option1: "Option 1",
+    option2: "Option 2",
+    option3: "Option 3",
+    option4: "Option 4",
+  });
+  const handleChangeRadio = (event) => {
+    const { name, value } = event.target;
+    setRadioValue({
+      ...radioValue,
+      [name]: value,
+    });
+  };
+
   return (
-    <>
-      <Box
-        component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "27ch" } }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField sx={{ backgroundColor: "#bdbdbd", borderTopLeftRadius: "20px" }} id="filled-basic" label="Question text" variant="filled" color="secondary" />
-      </Box>
-      
-      <Box sx={{ backgroundColor: "purple" }}>
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            value={selectedTab}
-            sx={{ backgroundColor: "#80deea", color: "black" }}
-            onChange={handleChange}
+    <Box sx={{ width: 600 }}>
+      <Grid container spacing={2}>
+        <Grid item size={{ xs: 12, sm: 7 }}>
+          <Box
+            component="form"
+            sx={{ "& > :not(style)": { m: 1, width: "95%" } }}
+            noValidate
+            autoComplete="off"
           >
-            <MenuItem value="short-answer">Short answer</MenuItem>
-            <MenuItem value="multiple-choice">Multiple choice</MenuItem>
-            <MenuItem value="checkboxes">Checkboxes</MenuItem>
-          </Select>
-          <FormHelperText sx={{ color: "#80deea" }}>
-            Choose the Type of Question
-          </FormHelperText>
-        </FormControl>
-      </Box>
+            <TextField
+              sx={{
+                backgroundColor: grey[100],
+                borderTopLeftRadius: "30px",
+                borderTopRightRadius: "10px",
+              }}
+              id="filled-basic"
+              label="Question title"
+              variant="filled"
+              color="secondary"
+            />
+          </Box>
+        </Grid>
 
-      <Box
-        sx={{ width: "100%", typography: "body1", backgroundColor: "#80deea" }}
-      >
-        {selectedTab === "short-answer" && <p>Short Answer Content</p>}
-        {selectedTab === "multiple-choice" && <p>Multiple Choice Content</p>}
-        {selectedTab === "checkboxes" && <p>Checkboxes Content</p>}
-      </Box>
+        <Grid item size={{ xs: 12, sm: 5 }}>
+          <FormControl sx={{ m: 1, width: "100%" }} size="small">
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              value={selectedTab}
+              sx={{ backgroundColor: "#80deea", color: "black" }}
+              onChange={handleChange}
+            >
+              <MenuItem value="short-answer">Short answer</MenuItem>
+              <MenuItem value="multiple-choice">Multiple choice</MenuItem>
+              <MenuItem value="checkboxes">Checkboxes</MenuItem>
+            </Select>
+            <FormHelperText sx={{ color: "#80deea" }}>
+              Choose the Type of Question
+            </FormHelperText>
+          </FormControl>
+        </Grid>
 
+        <Grid item size={{ xs: 12, sm: 8 }}>
+          <Box
+            sx={{
+              width: "100%",
+              typography: "body1",
+              color: "black",
+            }}
+          >
+            {selectedTab === "short-answer" && (
+              <TextField
+                id="outlined-textarea"
+                label="Answer input"
+                placeholder="Maximum 255 characters"
+                value={value}
+                onChange={handleChangeValue}
+                sx={{
+                  inputProps: { maxLength: 255 },
+                  width: "100%",
+                  background:
+                    "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                  borderRadius: "20px",
+                }}
+                error={value.length > 255}
+                helperText={
+                  value.length > 255 ? "Exceeded maximum character limit" : ""
+                }
+                multiline
+              />
+            )}
+            {selectedTab === "multiple-choice" && (
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="option1"
+                  name="radio-buttons-group"
+                  sx={{
+                    paddingLeft: "30px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      background:
+                        "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                      borderRadius: "20px",
+                      paddingRight: "10px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <FormControlLabel
+                      value="option1"
+                      control={<Radio />}
+                      label=""
+                      sx={{ marginRight: 0, marginLeft: 0.5 }}
+                    />
+                    <TextField
+                      name="option1"
+                      variant="outlined"
+                      size="small"
+                      value={radioValue.option1}
+                      onChange={handleChangeRadio}
+                      sx={{ width: "100%" }}
+                    />
+                  </Box>
 
-    <Stack direction="row" spacing={2}>
-      <Button variant="outlined" endIcon={<SendIcon />}>
-        Create
-      </Button>
-      <Button variant="contained" startIcon={<DeleteIcon />}>
-        Delete
-      </Button>
-    </Stack>
-    </>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      background:
+                        "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                      borderRadius: "20px",
+                      paddingRight: "10px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <FormControlLabel
+                      value="option2"
+                      control={<Radio />}
+                      label=""
+                      sx={{ marginRight: 0, marginLeft: 0.5 }}
+                    />
+                    <TextField
+                      name="option2"
+                      variant="outlined"
+                      size="small"
+                      value={radioValue.option2}
+                      onChange={handleChangeRadio}
+                      sx={{ width: "100%" }}
+                    />
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      background:
+                        "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                      borderRadius: "20px",
+                      paddingRight: "10px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <FormControlLabel
+                      value="option3"
+                      control={<Radio />}
+                      label=""
+                      sx={{ marginRight: 0, marginLeft: 0.5}}
+                    />
+                    <TextField
+                      name="option3"
+                      variant="outlined"
+                      size="small"
+                      value={radioValue.option3}
+                      onChange={handleChangeRadio}
+                      sx={{ width: "100%" }}
+                    />
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      background:
+                        "linear-gradient(285deg, rgba(156,228,237,1) 0%, rgba(231,231,231,1) 86%)",
+                      borderRadius: "20px",
+                      paddingRight: "10px",
+                      
+                    }}
+                  >
+                    <FormControlLabel
+                      value="option4"
+                      control={<Radio />}
+                      label=""
+                      sx={{ marginRight: 0, marginLeft: 0.5 }}
+                    />
+                    <TextField
+                      name="option4"
+                      variant="outlined"
+                      size="small"
+                      value={radioValue.option4}
+                      onChange={handleChangeRadio}
+                      sx={{ width: "100%" }}
+                    />
+                  </Box>
+                </RadioGroup>
+              </FormControl>
+            )}
+            {selectedTab === "checkboxes" && <p>Checkboxes Content</p>}
+          </Box>
+        </Grid>
+
+        <Grid item size={{ xs: 12, sm: 4 }} sx={{ marginTop: "auto" }}>
+          <Stack direction="row" spacing={2} width={"100%"}>
+            <Button
+              sx={{ color: "#80deea" }}
+              variant="text"
+              endIcon={<SendIcon />}
+            >
+              Create
+            </Button>
+            <Button
+              sx={{ backgroundColor: grey[500] }}
+              variant="contained"
+              startIcon={<DeleteIcon />}
+            >
+              Cancel
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
